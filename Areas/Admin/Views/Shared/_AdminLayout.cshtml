@@ -1,0 +1,44 @@
+@* Inner layout for the Admin area, nested in _Layout (found in Views/Shared of the main area) *@
+@{
+    Layout = "_Layout";
+
+    // route data of the current request, used to highlight the selected menu link
+    string controller =
+        ViewContext.RouteData.Values["controller"]?.ToString() ?? "";
+}
+
+<header>
+    <nav class="navbar navbar-expand-md navbar-dark bg-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" asp-area="Admin" asp-controller="Home" asp-action="Index">Group1Blackboard Admin</a>
+            <button class="navbar-toggler" type="button"
+                    data-bs-toggle="collapse" data-bs-target="#adminNav"
+                    aria-controls="adminNav" aria-expanded="false"
+                    aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="adminNav">
+                <div class="navbar-nav me-auto">
+                    <a class="nav-link @(controller == "Major" ? "active" : "")"
+                       asp-area="Admin" asp-controller="Major" asp-action="Index">Major</a>
+                    <a class="nav-link @(controller == "Course" ? "active" : "")"
+                       asp-area="Admin" asp-controller="Course" asp-action="Index">Course</a>
+                    <a class="nav-link @(controller == "Student" ? "active" : "")"
+                       asp-area="Admin" asp-controller="Student" asp-action="Index">Student</a>
+                </div>
+                <div class="navbar-nav ms-auto">
+                    <a class="nav-link"
+                       asp-area="" asp-controller="Home" asp-action="Index">View Site</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+</header>
+<main class="container py-3">
+    @RenderBody()
+</main>
+
+@* pass the optional scripts section of a view up to _Layout *@
+@section scripts {
+    @RenderSection("scripts", required: false)
+}
