@@ -1,0 +1,30 @@
+@model Major
+@{
+    ViewData["Title"] = ViewBag.Action + " Major";
+}
+
+<h1>@ViewBag.Action Major</h1>
+
+<form asp-action="Save" method="post" class="col-md-6">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <input type="hidden" asp-for="MajorID" />
+
+    <div class="mb-3">
+        <label asp-for="Name" class="form-label"></label>
+        <input asp-for="Name" class="form-control" />
+        <span asp-validation-for="Name" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+        <label asp-for="College" class="form-label"></label>
+        <input asp-for="College" class="form-control" placeholder="e.g. College of Business" />
+        <span asp-validation-for="College" class="text-danger"></span>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Save</button>
+    <a class="btn btn-outline-secondary" asp-action="Index">Cancel</a>
+</form>
+
+@section scripts {
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/dist/jquery.validate.unobtrusive.min.js"></script>
+}

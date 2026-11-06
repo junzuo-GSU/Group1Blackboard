@@ -1,0 +1,82 @@
+@using Microsoft.AspNetCore.Mvc.Rendering
+@model CatalogViewModel
+@{
+    ViewData["Title"] = "Catalog";
+}
+
+<h1>Course Catalog</h1>
+
+<div class="row">
+    @* ---------- filtering panel ---------- *@
+    <div class="col-md-3 mb-3">
+        <div class="card">
+            <div class="card-header fw-bold">Filter Courses</div>
+            <div class="card-body">
+                @* choosing an item submits the form; the Filter action redirects to Index (PRG) *@
+                <form asp-controller="Catalog" asp-action="Filter" method="post">
+                    <div class="mb-3">
+                        <label asp-for="ActiveMajor" class="form-label">Major</label>
+                        <select asp-for="ActiveMajor" asp-items="@(ViewBag.Majors as List<SelectListItem>)"
+                                class="form-select" onchange="this.form.submit()"></select>
+                    </div>
+                    <div class="mb-3">
+                        <label asp-for="ActiveLoc" class="form-label">Location</label>
+                        <select asp-for="ActiveLoc" asp-items="@(ViewBag.Locations as List<SelectListItem>)"
+                                class="form-select" onchange="this.form.submit()"></select>
+                    </div>
+                    <div class="mb-3">
+                        <label asp-for="ActiveSem" class="form-label">Semester</label>
+                        <select asp-for="ActiveSem" asp-items="@(ViewBag.Semesters as List<SelectListItem>)"
+                                class="form-select" onchange="this.form.submit()"></select>
+                    </div>
+                    <noscript><button type="submit" class="btn btn-primary">Filter</button></noscript>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    @* ---------- filtering result panel ---------- *@
+    <div class="col-md-9">
+        <div class="card">
+            <div class="card-header fw-bold">Courses (@Model.Courses.Count)</div>
+            <div class="card-body">
+                @if (Model.Courses.Count == 0)
+                {
+                    <p class="mb-0">No courses match the selected filters.</p>
+                }
+                else
+                {
+                    <div class="table-responsive">
+                        <table class="table table-striped table-sm align-middle mb-0">
+                            <thead>
+                                <tr>
+                                    <th>Course</th>
+                                    <th>Name</th>
+                                    <th>Credit</th>
+                                    <th>Semester</th>
+                                    <th>Location</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var course in Model.Courses)
+                                {
+                                    <tr>
+                                        <td>@course.CourseNumber</td>
+                                        <td>@course.Name</td>
+                                        <td>@course.Credit</td>
+                                        <td>@course.Semester</td>
+                                        <td>@course.Location</td>
+                                        <td class="text-end">
+                                            <a asp-controller="Catalog" asp-action="Details" asp-route-id="@course.CourseID">Details</a>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>

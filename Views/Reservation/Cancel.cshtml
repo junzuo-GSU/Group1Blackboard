@@ -1,0 +1,20 @@
+@model Reservation
+@{
+    ViewData["Title"] = "Cancel Reservation";
+}
+
+<h1>Cancel Reservation</h1>
+<p>Are you sure you want to cancel this reservation?</p>
+<dl class="row">
+    <dt class="col-sm-3">Course Number</dt><dd class="col-sm-9">@Model.Course.CourseNumber</dd>
+    <dt class="col-sm-3">Course Name</dt><dd class="col-sm-9">@Model.Course.Name</dd>
+    <dt class="col-sm-3">Offered Semester</dt><dd class="col-sm-9">@Model.Course.Semester</dd>
+    <dt class="col-sm-3">Times</dt><dd class="col-sm-9">@Model.Course.Times</dd>
+    <dt class="col-sm-3">Instructor</dt><dd class="col-sm-9">@Model.Course.Instructor.Name</dd>
+</dl>
+
+<form asp-action="Cancel" method="post">
+    <input type="hidden" asp-for="ReservationID" />
+    <button type="submit" class="btn btn-danger">Yes, cancel the reservation</button>
+    <a class="btn btn-outline-secondary" asp-action="Index">No, keep it</a>
+</form>

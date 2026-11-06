@@ -23,8 +23,8 @@
                        asp-area="Admin" asp-controller="Major" asp-action="Index">Major</a>
                     <a class="nav-link @(controller == "Course" ? "active" : "")"
                        asp-area="Admin" asp-controller="Course" asp-action="Index">Course</a>
-                    <a class="nav-link @(controller == "Student" ? "active" : "")"
-                       asp-area="Admin" asp-controller="Student" asp-action="Index">Student</a>
+                    <a class="nav-link @(controller == "User" ? "active" : "")"
+                       asp-area="Admin" asp-controller="User" asp-action="Index">User</a>
                 </div>
                 <div class="navbar-nav ms-auto">
                     <a class="nav-link"
@@ -35,6 +35,7 @@
     </nav>
 </header>
 <main class="container py-3">
+    <partial name="_Messages" />
     @RenderBody()
 </main>
 

@@ -1,0 +1,55 @@
+@model CatalogViewModel
+@{
+    ViewData["Title"] = "My Plan";
+}
+
+<h1>My Plan</h1>
+
+@if (Model.Courses.Count == 0)
+{
+    <p>Your plan is empty. Browse the catalog to add courses.</p>
+}
+else
+{
+    <div class="table-responsive">
+        <table class="table table-striped align-middle">
+            <thead>
+                <tr>
+                    <th>Course</th>
+                    <th>Name</th>
+                    <th>Credit</th>
+                    <th>Semester</th>
+                    <th>Location</th>
+                    <th>Times</th>
+                    <th>Instructor</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var course in Model.Courses)
+                {
+                    <tr>
+                        <td>@course.CourseNumber</td>
+                        <td>@course.Name</td>
+                        <td>@course.Credit</td>
+                        <td>@course.Semester</td>
+                        <td>@course.Location</td>
+                        <td>@course.Times</td>
+                        <td>@course.Instructor.Name</td>
+                        <td class="text-nowrap text-end">
+                            <form asp-action="Reserve" asp-route-id="@course.CourseID" method="post" class="d-inline">
+                                <button type="submit" class="btn btn-sm btn-success">Reserve</button>
+                            </form>
+                            <form asp-action="Remove" asp-route-id="@course.CourseID" method="post" class="d-inline">
+                                <button type="submit" class="btn btn-sm btn-outline-danger">Cancel</button>
+                            </form>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+}
+
+<a class="btn btn-outline-secondary" asp-controller="Catalog" asp-action="Index"
+   asp-route-activeMajor="@Model.ActiveMajor" asp-route-activeLoc="@Model.ActiveLoc" asp-route-activeSem="@Model.ActiveSem">Back to Catalog</a>

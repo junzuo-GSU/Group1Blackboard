@@ -1,0 +1,49 @@
+@model List<Reservation>
+@{
+    ViewData["Title"] = "Reservations";
+}
+
+<h1>Reservations</h1>
+
+@if (Model.Count == 0)
+{
+    <p>There are no reservations. Add courses to your plan, then reserve them.</p>
+}
+else
+{
+    <div class="table-responsive">
+        <table class="table table-striped align-middle">
+            <thead>
+                <tr>
+                    <th>Reservation ID</th>
+                    <th>Course</th>
+                    <th>Name</th>
+                    <th>Credit</th>
+                    <th>Semester</th>
+                    <th>Location</th>
+                    <th>Times</th>
+                    <th>Instructor</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var reservation in Model)
+                {
+                    <tr>
+                        <td>@reservation.ReservationID</td>
+                        <td>@reservation.Course.CourseNumber</td>
+                        <td>@reservation.Course.Name</td>
+                        <td>@reservation.Course.Credit</td>
+                        <td>@reservation.Course.Semester</td>
+                        <td>@reservation.Course.Location</td>
+                        <td>@reservation.Course.Times</td>
+                        <td>@reservation.Course.Instructor.Name</td>
+                        <td class="text-end">
+                            <a class="btn btn-sm btn-outline-danger" asp-action="Cancel" asp-route-id="@reservation.ReservationID">Cancel</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+}

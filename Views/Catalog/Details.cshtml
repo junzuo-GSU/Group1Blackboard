@@ -1,0 +1,33 @@
+@model CatalogViewModel
+@{
+    ViewData["Title"] = Model.Course.CourseNumber;
+}
+
+<h1>@Model.Course.CourseNumber</h1>
+
+<dl class="row">
+    <dt class="col-sm-3">Course Number</dt><dd class="col-sm-9">@Model.Course.CourseNumber</dd>
+    <dt class="col-sm-3">Course Name</dt><dd class="col-sm-9">@Model.Course.Name</dd>
+    <dt class="col-sm-3">Credit</dt><dd class="col-sm-9">@Model.Course.Credit</dd>
+    <dt class="col-sm-3">Offered Semester</dt><dd class="col-sm-9">@Model.Course.Semester</dd>
+    <dt class="col-sm-3">Location</dt><dd class="col-sm-9">@Model.Course.Location</dd>
+    <dt class="col-sm-3">Times</dt><dd class="col-sm-9">@Model.Course.Times</dd>
+    <dt class="col-sm-3">Instructor</dt><dd class="col-sm-9">@Model.Course.Instructor.Name</dd>
+</dl>
+
+<div class="d-flex gap-2">
+    @* back to the catalog with the filters the student had chosen *@
+    <a class="btn btn-outline-secondary" asp-controller="Catalog" asp-action="Index"
+       asp-route-activeMajor="@Model.ActiveMajor" asp-route-activeLoc="@Model.ActiveLoc" asp-route-activeSem="@Model.ActiveSem">Back to Catalog</a>
+
+    @if (Model.InPlan)
+    {
+        <a class="btn btn-success" asp-controller="Plan" asp-action="Index">In your plan - view plan</a>
+    }
+    else
+    {
+        <form asp-controller="Plan" asp-action="Add" asp-route-id="@Model.Course.CourseID" method="post">
+            <button type="submit" class="btn btn-primary">Add Course to Plan</button>
+        </form>
+    }
+</div>

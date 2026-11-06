@@ -25,8 +25,19 @@
                        asp-area="" asp-controller="Catalog" asp-action="Index">Catalog</a>
                     <a class="nav-link @(controller == "Calendar" ? "active" : "")"
                        asp-area="" asp-controller="Calendar" asp-action="Index">Calendar</a>
+                    <a class="nav-link @(controller == "Reservation" ? "active" : "")"
+                       asp-area="" asp-controller="Reservation" asp-action="Index">Reservation</a>
                 </div>
-                <div class="navbar-nav ms-auto">
+                <div class="navbar-nav ms-auto align-items-md-center">
+                    @* shopping cart: opens the plan, the badge shows the number of courses in it *@
+                    <a class="nav-link position-relative @(controller == "Plan" ? "active" : "")"
+                       asp-area="" asp-controller="Plan" asp-action="Index" title="My plan" aria-label="My plan">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor"
+                             viewBox="0 0 16 16" aria-hidden="true">
+                            <path d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5M3.102 4l1.313 7h8.17l1.313-7zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4m7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4m-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2m7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2" />
+                        </svg>
+                        <span class="badge rounded-pill bg-danger">@(new PlanSession(Context.Session).GetPlanCount())</span>
+                    </a>
                     <a class="nav-link"
                        asp-area="Admin" asp-controller="Home" asp-action="Index">Admin</a>
                 </div>
@@ -35,6 +46,7 @@
     </nav>
 </header>
 <main class="container py-3">
+    <partial name="_Messages" />
     @RenderBody()
 </main>
 
