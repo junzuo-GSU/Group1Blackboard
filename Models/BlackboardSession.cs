@@ -1,7 +1,7 @@
 namespace Group1Blackboard.Models
 {
     // wrapper class: keeps the session keys in one place
-    public class PlanSession
+    public class BlackboardSession
     {
         private const string PlanKey = "plan";
         private const string CountKey = "plancount";
@@ -10,7 +10,7 @@ namespace Group1Blackboard.Models
         private const string SemKey = "activesem";
 
         private readonly ISession session;
-        public PlanSession(ISession session) => this.session = session;
+        public BlackboardSession(ISession session) => this.session = session;
 
         // the courses the student has added to the plan
         public List<Course> GetPlan() => session.GetObject<List<Course>>(PlanKey) ?? new List<Course>();

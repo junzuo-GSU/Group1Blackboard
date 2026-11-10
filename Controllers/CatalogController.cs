@@ -13,12 +13,12 @@ namespace Group1Blackboard.Controllers
         // the filters arrive through the route: Catalog/Index/major-1/loc-Hybrid/sem-all
         public IActionResult Index(CatalogViewModel model)
         {
-            var session = new PlanSession(HttpContext.Session);
+            var session = new BlackboardSession(HttpContext.Session);
 
             // if the session has no plan yet, restore it from the cookie
             if (session.GetPlanCountOrNull() == null)
             {
-                var ids = new PlanCookies(Request.Cookies).GetPlanIds();
+                var ids = new BlackboardCookies(Request.Cookies).GetPlanIds();
                 List<Course> plan = new List<Course>();
                 if (ids.Count > 0)
                 {
@@ -79,7 +79,7 @@ namespace Group1Blackboard.Controllers
 
         public IActionResult Details(int id)
         {
-            var session = new PlanSession(HttpContext.Session);
+            var session = new BlackboardSession(HttpContext.Session);
 
             var course = context.Courses.Include(c => c.Major).Include(c => c.Instructor)
                 .FirstOrDefault(c => c.CourseID == id);

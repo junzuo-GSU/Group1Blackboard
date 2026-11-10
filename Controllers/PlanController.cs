@@ -12,7 +12,7 @@ namespace Group1Blackboard.Controllers
         public IActionResult Index()
         {
             RestorePlan();
-            var session = new PlanSession(HttpContext.Session);
+            var session = new BlackboardSession(HttpContext.Session);
             var model = new CatalogViewModel
             {
                 Courses = session.GetPlan(),
@@ -27,7 +27,7 @@ namespace Group1Blackboard.Controllers
         public IActionResult Add(int id)
         {
             RestorePlan();
-            var session = new PlanSession(HttpContext.Session);
+            var session = new BlackboardSession(HttpContext.Session);
             var plan = session.GetPlan();
 
             var course = context.Courses.Include(c => c.Major).Include(c => c.Instructor)
@@ -60,7 +60,7 @@ namespace Group1Blackboard.Controllers
         public IActionResult Remove(int id)
         {
             RestorePlan();
-            var session = new PlanSession(HttpContext.Session);
+            var session = new BlackboardSession(HttpContext.Session);
             var plan = session.GetPlan();
 
             var course = plan.FirstOrDefault(c => c.CourseID == id);
@@ -78,7 +78,7 @@ namespace Group1Blackboard.Controllers
         public IActionResult Reserve(int id)
         {
             RestorePlan();
-            var session = new PlanSession(HttpContext.Session);
+            var session = new BlackboardSession(HttpContext.Session);
             var plan = session.GetPlan();
 
             var course = plan.FirstOrDefault(c => c.CourseID == id);
@@ -101,10 +101,10 @@ namespace Group1Blackboard.Controllers
         // If the session has no plan yet (new browser session), seed it from the cookie
         private void RestorePlan()
         {
-            var session = new PlanSession(HttpContext.Session);
+            var session = new BlackboardSession(HttpContext.Session);
             if (session.GetPlanCountOrNull() != null) return;
 
-            var ids = new PlanCookies(Request.Cookies).GetPlanIds();
+            var ids = new BlackboardCookies(Request.Cookies).GetPlanIds();
             List<Course> plan = new List<Course>();
             if (ids.Count > 0)
             {
@@ -117,8 +117,8 @@ namespace Group1Blackboard.Controllers
         // keep the session and the cookie consistent
         private void SavePlan(List<Course> plan)
         {
-            new PlanSession(HttpContext.Session).SetPlan(plan);
-            new PlanCookies(Response.Cookies).SetPlanIds(plan);
+            new BlackboardSession(HttpContext.Session).SetPlan(plan);
+            new BlackboardCookies(Response.Cookies).SetPlanIds(plan);
         }
     }
 }

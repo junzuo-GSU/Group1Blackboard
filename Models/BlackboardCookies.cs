@@ -1,7 +1,7 @@
 namespace Group1Blackboard.Models
 {
     // wrapper class: the plan's course ids live in a cookie for two weeks
-    public class PlanCookies
+    public class BlackboardCookies
     {
         private const string PlanKey = "plancourseids";
         private const string Delimiter = "-";
@@ -9,8 +9,8 @@ namespace Group1Blackboard.Models
         private readonly IRequestCookieCollection? requestCookies;
         private readonly IResponseCookies? responseCookies;
 
-        public PlanCookies(IRequestCookieCollection cookies) => requestCookies = cookies;
-        public PlanCookies(IResponseCookies cookies) => responseCookies = cookies;
+        public BlackboardCookies(IRequestCookieCollection cookies) => requestCookies = cookies;
+        public BlackboardCookies(IResponseCookies cookies) => responseCookies = cookies;
 
         public List<int> GetPlanIds()
         {

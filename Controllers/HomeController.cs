@@ -13,10 +13,10 @@ namespace Group1Blackboard.Controllers
         public IActionResult Index()
         {
             // if the session has no plan yet, restore it from the cookie so the cart badge is right
-            var session = new PlanSession(HttpContext.Session);
+            var session = new BlackboardSession(HttpContext.Session);
             if (session.GetPlanCountOrNull() == null)
             {
-                var ids = new PlanCookies(Request.Cookies).GetPlanIds();
+                var ids = new BlackboardCookies(Request.Cookies).GetPlanIds();
                 List<Course> plan = new List<Course>();
                 if (ids.Count > 0)
                 {
